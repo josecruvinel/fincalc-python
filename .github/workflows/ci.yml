@@ -33,3 +33,31 @@ jobs:
 
     - name: Executar Linter de Segurança (Bandit)
       run: bandit -r fincalc.py
+
+  # JOB 2: ENTREGA CONTÍNUA (CD DESAFIO) - Roda no próprio Codespaces do Aluno!
+  deploy-simulado-codespaces:
+    name: CD - Deploy Simulado no Codespaces
+    runs-on: self-hosted # <--- Informa que o deploy roda na máquina local/Codespaces
+    needs: build-and-lint # <--- Garante que só roda se o CI passar sem erros!
+
+    steps:
+    - name: Checkout do Código
+      uses: actions/checkout@v4
+
+    - name: Simular Implantação no Servidor de Produção do Codespace
+      run: |
+        echo "🚀 Iniciando processo de deploy automático no servidor local..."
+        
+        # Cria a pasta que simula o servidor de produção
+        mkdir -p /tmp/servidor_producao_fincalc
+        
+        # Copia os arquivos validados para o diretório de produção
+        cp -r src/* /tmp/servidor_producao_fincalc/
+        
+        echo "📦 Arquivos da aplicação copiados para /tmp/servidor_producao_fincalc/"
+        
+        # Teste pré-flight final no ambiente de produção
+        python3 -m py_compile /tmp/servidor_producao_fincalc/fincalc.py
+        
+        echo "✅ DEPLOY CONCLUÍDO COM SUCESSO!"
+        echo "A aplicação FinCalc está 'no ar' e pronta para execução em produção."
