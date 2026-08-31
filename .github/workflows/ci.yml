@@ -52,7 +52,7 @@ jobs:
         mkdir -p /tmp/servidor_producao_fincalc
         
         # Copia os arquivos validados para o diretório de produção
-        cp -r src/* /tmp/servidor_producao_fincalc/
+        cp -r *.py /tmp/servidor_producao_fincalc/
         
         echo "📦 Arquivos da aplicação copiados para /tmp/servidor_producao_fincalc/"
         
